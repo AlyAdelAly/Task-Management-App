@@ -38,10 +38,17 @@ npm run typecheck # type-check the project
 
 - ✅ Task list — title, description, status and due date per task.
 - ✅ Add-task form with validation: **title required**, **due date must be in the future**.
-- ✅ Edit and delete existing tasks (delete asks for confirmation).
+- ✅ Edit and delete existing tasks; delete asks for confirmation in a styled modal.
 - ✅ Filter by status and search by title (case-insensitive).
 - ✅ Initial data fetched from a mock API (JSONPlaceholder); the loading state covers the request.
 - ✅ Clear **loading** (skeletons) and **error** (with retry) states.
+
+**UX polish**
+
+- Add/edit and delete confirmation use a shared modal that is **teleported to `<body>`**
+  (so the backdrop always covers the full viewport) with **enter/leave animations**
+  that respect `prefers-reduced-motion`.
+- Overdue, not-done tasks are flagged in red on both the card and the detail page.
 
 **Technical**
 
@@ -65,7 +72,8 @@ npm run typecheck # type-check the project
 │  ├─ TaskForm.vue             # Add/edit form + validation (reused for both)
 │  ├─ TaskFilters.vue          # Status filter + title search (v-model)
 │  ├─ StatusBadge.vue          # Colored status pill
-│  ├─ AppModal.vue             # Accessible modal wrapper
+│  ├─ AppModal.vue             # Teleported, animated modal wrapper (Escape/backdrop close)
+│  ├─ ConfirmDialog.vue        # Delete confirmation dialog (built on AppModal)
 │  ├─ LoadingState.vue         # Skeleton placeholders
 │  └─ ErrorState.vue           # Error message + retry button
 ├─ stores/tasks.ts             # Pinia store: state, getters, CRUD actions
