@@ -13,6 +13,7 @@ error states, and initial data fetched from a mock API.
 | Language        | **TypeScript**                                     |
 | State           | **Pinia**                                          |
 | Styling         | **Tailwind CSS** (via Nuxt's built-in PostCSS)     |
+| Icons           | **Nuxt Icon** + Lucide (`lucide:*`, bundled locally) |
 | Routing         | Nuxt file-based routing (list + detail pages)      |
 | Mock API        | Local Nuxt server route (`/api/tasks`)             |
 | Tests           | **Vitest** + Vue Test Utils                        |
