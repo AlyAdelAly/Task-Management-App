@@ -14,7 +14,7 @@ error states, and initial data fetched from a mock API.
 | State           | **Pinia**                                          |
 | Styling         | **Tailwind CSS** (via Nuxt's built-in PostCSS)     |
 | Routing         | Nuxt file-based routing (list + detail pages)      |
-| Mock API        | **JSONPlaceholder** `/todos`                       |
+| Mock API        | Local Nuxt server route (`/api/tasks`)             |
 | Tests           | **Vitest** + Vue Test Utils                        |
 
 All bonus items from the brief are included: TypeScript, Nuxt.js, and unit tests.
@@ -76,6 +76,7 @@ npm run typecheck # type-check the project
 │  ├─ ConfirmDialog.vue        # Delete confirmation dialog (built on AppModal)
 │  ├─ LoadingState.vue         # Skeleton placeholders
 │  └─ ErrorState.vue           # Error message + retry button
+├─ server/api/tasks.get.ts     # Mock API: GET /api/tasks (delayed, full Task shape)
 ├─ stores/tasks.ts             # Pinia store: state, getters, CRUD actions
 ├─ types/task.ts               # Task / TaskStatus / form types
 ├─ utils/date.ts               # Date formatting + overdue helper
@@ -84,18 +85,16 @@ npm run typecheck # type-check the project
 
 ## Notes on the mock API
 
-`GET https://jsonplaceholder.typicode.com/todos` only returns
-`{ userId, id, title, completed }` — it has **no** description, no three-state status
-and no due date, and it does **not** persist writes. To demonstrate the full feature
-set, the store:
+Initial data comes from a **local mock API** served by Nuxt's server engine at
+[`server/api/tasks.get.ts`](server/api/tasks.get.ts). A `GET /api/tasks` request
+returns fully-shaped `Task` objects — `title`, `description`, three-state `status`
+and `dueDate` — after a short `setTimeout` delay so the loading state is visible.
+Due dates are generated relative to today, so some tasks are overdue and some are
+upcoming.
 
-- fetches a slice of todos and **enriches** each one into the app's `Task` shape
-  (synthetic description, a status derived so all three states appear, and a spread of
-  past/future due dates — see `enrichTodo` in `stores/tasks.ts`), and
-- treats **create / edit / delete** as optimistic updates held in the Pinia store
-  (they are not sent back to JSONPlaceholder, since it wouldn't persist them anyway).
-
-The API base URL is configurable via the `NUXT_PUBLIC_API_BASE` environment variable.
+Because it's a read-only mock, **create / edit / delete** are handled as optimistic
+updates in the Pinia store (they aren't persisted back to the server), which means
+they reset on a full page refresh.
 
 ## Performance considerations
 
@@ -108,7 +107,7 @@ The API base URL is configurable via the `NUXT_PUBLIC_API_BASE` environment vari
 
 Two spec files under `tests/`:
 
-- `tasks.store.spec.ts` — store CRUD, the `filteredTasks` getter, and `enrichTodo`.
+- `tasks.store.spec.ts` — store CRUD and the `filteredTasks` getter (status + search).
 - `TaskForm.spec.ts` — form validation (blocks empty title / past due date, emits on
   valid input).
 
