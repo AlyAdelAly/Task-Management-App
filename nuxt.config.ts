@@ -19,11 +19,5 @@ export default defineNuxtConfig({
         { name: 'description', content: 'A small task management app built with Nuxt, Pinia and Tailwind CSS.' }
       ]
     }
-  },
-  runtimeConfig: {
-    public: {
-      // Base URL for the mock API. Overridable via NUXT_PUBLIC_API_BASE.
-      apiBase: 'https://jsonplaceholder.typicode.com'
-    }
   }
 })

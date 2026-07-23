@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
-import { enrichTodo, useTasksStore } from '~/stores/tasks'
+import { useTasksStore } from '~/stores/tasks'
 import type { TaskFormValues } from '~/types/task'
 
 const baseValues: TaskFormValues = {
@@ -67,22 +67,5 @@ describe('tasks store', () => {
       'Beta',
       'Gamma'
     ])
-  })
-})
-
-describe('enrichTodo', () => {
-  it('maps a completed remote todo to a Done task', () => {
-    const task = enrichTodo({ userId: 1, id: 7, title: 'Ship it', completed: true }, 0)
-    expect(task.status).toBe('Done')
-    expect(task.id).toBe(7)
-    expect(task.dueDate).toMatch(/^\d{4}-\d{2}-\d{2}$/)
-    expect(task.description).not.toBe('')
-  })
-
-  it('derives Pending / In Progress for incomplete todos', () => {
-    const even = enrichTodo({ userId: 1, id: 1, title: 'a', completed: false }, 0)
-    const odd = enrichTodo({ userId: 1, id: 2, title: 'b', completed: false }, 1)
-    expect(even.status).toBe('Pending')
-    expect(odd.status).toBe('In Progress')
   })
 })

@@ -21,11 +21,3 @@ export interface TaskFormValues {
   status: TaskStatus
   dueDate: string
 }
-
-/** Shape returned by the JSONPlaceholder /todos endpoint. */
-export interface RemoteTodo {
-  userId: number
-  id: number
-  title: string
-  completed: boolean
-}

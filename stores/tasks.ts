@@ -1,42 +1,13 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import type {
-  RemoteTodo,
-  StatusFilter,
-  Task,
-  TaskFormValues,
-  TaskStatus
-} from '~/types/task'
-
-/**
- * JSONPlaceholder only returns `{ userId, id, title, completed }`, so we enrich
- * each todo into our richer `Task` shape with a synthetic description, a 3-state
- * status (so all three appear in the list) and a spread of past/future due dates.
- */
-export function enrichTodo(todo: RemoteTodo, index: number): Task {
-  const status: TaskStatus = todo.completed
-    ? 'Done'
-    : index % 2 === 0
-      ? 'Pending'
-      : 'In Progress'
-
-  // Spread due dates from ~5 days ago to well into the future.
-  const due = new Date()
-  due.setDate(due.getDate() + (index * 3 - 5))
-
-  return {
-    id: todo.id,
-    title: todo.title,
-    description: `Auto-generated description for "${todo.title}". Update it with the real details.`,
-    status,
-    dueDate: due.toISOString().slice(0, 10)
-  }
-}
+import type { StatusFilter, Task, TaskFormValues } from '~/types/task'
 
 export const useTasksStore = defineStore('tasks', () => {
   // ---- State ----
   const tasks = ref<Task[]>([])
-  const loading = ref(false)
+  // Start in the loading state: the app always fetches on load, so the first
+  // paint should be the skeleton — not a brief "No tasks found" empty state.
+  const loading = ref(true)
   const error = ref<string | null>(null)
   const searchQuery = ref('')
   const statusFilter = ref<StatusFilter>('All')
@@ -63,12 +34,8 @@ export const useTasksStore = defineStore('tasks', () => {
     loading.value = true
     error.value = null
     try {
-      const config = useRuntimeConfig()
-      const todos = await $fetch<RemoteTodo[]>(
-        `${config.public.apiBase}/todos`,
-        { query: { _limit: 12 } }
-      )
-      tasks.value = todos.map(enrichTodo)
+      // Fetch fully-shaped tasks from the local mock API (server/api/tasks.get.ts).
+      tasks.value = await $fetch<Task[]>('/api/tasks')
     } catch (err) {
       error.value =
         'Something went wrong while loading tasks. Please try again.'
