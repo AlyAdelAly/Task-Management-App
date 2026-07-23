@@ -3,25 +3,26 @@
 </script>
 
 <template>
-  <div class="min-h-screen">
-    <header class="border-b border-slate-200 bg-white">
-      <div class="mx-auto flex max-w-5xl items-center gap-2 px-4 py-4">
-        <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-white">
-          <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path
-              fill-rule="evenodd"
-              d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-              clip-rule="evenodd"
-            />
-          </svg>
+  <div class="min-h-screen bg-slate-50">
+    <header
+      class="sticky top-0 z-40 border-b border-slate-200/80 bg-white/80 backdrop-blur"
+    >
+      <div class="mx-auto flex max-w-5xl items-center gap-3 px-4 py-3.5">
+        <span
+          class="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-sm"
+        >
+          <Icon name="lucide:list-checks" class="h-5 w-5" />
         </span>
-        <NuxtLink to="/" class="text-lg font-semibold text-slate-900">
-          Task Manager
-        </NuxtLink>
+        <div class="leading-tight">
+          <NuxtLink to="/" class="block text-base font-semibold text-slate-900">
+            Task Manager
+          </NuxtLink>
+          <span class="text-xs text-slate-500">Organize your work</span>
+        </div>
       </div>
     </header>
 
-    <main class="mx-auto max-w-5xl px-4 py-6">
+    <main class="mx-auto max-w-5xl px-4 py-6 sm:py-8">
       <NuxtPage />
     </main>
   </div>

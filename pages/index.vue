@@ -62,19 +62,17 @@ onMounted(() => {
     <!-- Page heading + add button -->
     <div class="flex flex-wrap items-center justify-between gap-3">
       <div>
-        <h1 class="text-2xl font-bold text-slate-900">Your tasks</h1>
+        <h1 class="text-2xl font-bold text-slate-900">All Tasks</h1>
         <p class="text-sm text-slate-500">
           Create, edit, filter and search your tasks.
         </p>
       </div>
       <button
         type="button"
-        class="inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
+        class="inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
         @click="openCreate"
       >
-        <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" />
-        </svg>
+        <Icon name="lucide:plus" class="h-4 w-4" />
         Add task
       </button>
     </div>

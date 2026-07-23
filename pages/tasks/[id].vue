@@ -42,13 +42,7 @@ onMounted(() => {
       to="/"
       class="inline-flex items-center gap-1 text-sm font-medium text-slate-500 transition hover:text-slate-800"
     >
-      <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-        <path
-          fill-rule="evenodd"
-          d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-          clip-rule="evenodd"
-        />
-      </svg>
+      <Icon name="lucide:arrow-left" class="h-4 w-4" />
       Back to tasks
     </NuxtLink>
 
@@ -64,35 +58,45 @@ onMounted(() => {
         <StatusBadge :status="task.status" />
       </div>
 
-      <dl class="mt-4 space-y-3 text-sm">
-        <div>
-          <dt class="font-medium text-slate-500">Due date</dt>
-          <dd :class="overdue ? 'text-red-600' : 'text-slate-800'">
-            {{ formatDate(task.dueDate) }}
+      <dl class="mt-5 space-y-4 text-sm">
+        <div class="flex items-center gap-2">
+          <Icon
+            :name="overdue ? 'lucide:calendar-clock' : 'lucide:calendar'"
+            class="h-4 w-4"
+            :class="overdue ? 'text-red-500' : 'text-slate-400'"
+          />
+          <dt class="sr-only">Due date</dt>
+          <dd :class="overdue ? 'font-medium text-red-600' : 'text-slate-700'">
+            Due {{ formatDate(task.dueDate) }}
             <span v-if="overdue">· overdue</span>
           </dd>
         </div>
-        <div>
-          <dt class="font-medium text-slate-500">Description</dt>
-          <dd class="whitespace-pre-line text-slate-800">
-            {{ task.description || 'No description provided.' }}
-          </dd>
+        <div class="flex items-start gap-2">
+          <Icon name="lucide:align-left" class="mt-0.5 h-4 w-4 text-slate-400" />
+          <div>
+            <dt class="mb-0.5 font-medium text-slate-500">Description</dt>
+            <dd class="whitespace-pre-line text-slate-800">
+              {{ task.description || 'No description provided.' }}
+            </dd>
+          </div>
         </div>
       </dl>
 
-      <div class="mt-6 flex gap-3">
+      <div class="mt-6 flex gap-3 border-t border-slate-100 pt-5">
         <button
           type="button"
-          class="rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-brand-700"
+          class="inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-brand-700"
           @click="isEditing = true"
         >
+          <Icon name="lucide:pencil" class="h-4 w-4" />
           Edit
         </button>
         <button
           type="button"
-          class="rounded-lg border border-red-300 px-4 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50"
+          class="inline-flex items-center gap-1.5 rounded-lg border border-red-300 px-4 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50"
           @click="isConfirmingDelete = true"
         >
+          <Icon name="lucide:trash-2" class="h-4 w-4" />
           Delete
         </button>
       </div>
@@ -101,8 +105,11 @@ onMounted(() => {
     <!-- Not found -->
     <div
       v-else
-      class="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center"
+      class="flex flex-col items-center rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center"
     >
+      <span class="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-400">
+        <Icon name="lucide:search-x" class="h-6 w-6" />
+      </span>
       <p class="text-sm font-medium text-slate-700">Task not found</p>
       <p class="mt-1 text-sm text-slate-500">
         It may have been deleted. Go back to the

@@ -26,8 +26,11 @@ defineEmits<{
     <!-- Empty state (no tasks match the current filters). -->
     <div
       v-else
-      class="rounded-xl border border-dashed border-slate-300 bg-white p-10 text-center"
+      class="flex flex-col items-center rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center"
     >
+      <span class="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-400">
+        <Icon name="lucide:clipboard-list" class="h-6 w-6" />
+      </span>
       <p class="text-sm font-medium text-slate-700">No tasks found</p>
       <p class="mt-1 text-sm text-slate-500">
         Try adjusting your search or filters, or add a new task.

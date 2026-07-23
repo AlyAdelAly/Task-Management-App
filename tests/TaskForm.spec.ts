@@ -8,7 +8,11 @@ const FUTURE = '2999-12-31'
 const TODAY = new Date().toISOString().slice(0, 10)
 
 function mountForm() {
-  return mount(TaskForm)
+  // `Icon` is a Nuxt-module global component, not available in the bare test
+  // environment, so stub it out.
+  return mount(TaskForm, {
+    global: { stubs: { Icon: true } }
+  })
 }
 
 describe('TaskForm validation', () => {
