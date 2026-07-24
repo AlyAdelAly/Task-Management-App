@@ -30,9 +30,11 @@ function confirmDelete() {
   router.push('/')
 }
 
-// Support direct navigation / refresh: load tasks if the store is empty.
+// Support direct navigation / refresh: load tasks if the store hasn't been
+// populated yet. (`loading` defaults to true as a "not loaded" signal, so it
+// must not gate this fetch — otherwise the skeleton would hang forever.)
 onMounted(() => {
-  if (store.tasks.length === 0 && !store.loading) store.fetchTasks()
+  if (store.tasks.length === 0) store.fetchTasks()
 })
 </script>
 
